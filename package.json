@@ -1,7 +1,7 @@
 {
   "name": "stapel",
-  "version": "0.1.0",
-  "description": "A modal handling library for React.",
+  "version": "0.1.1",
+  "description": "A flexible modal handling library for React.",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -15,5 +15,9 @@
     "tsconfig": "*",
     "turbo": "1.10.16"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "workspaces": [
+    "website",
+    "."
+  ]
 }

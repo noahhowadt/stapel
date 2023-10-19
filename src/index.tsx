@@ -103,4 +103,4 @@ const Stacker = (props: StackerProps) => {
   );
 };
 
-export default Stacker;
+export { Stacker, modal };

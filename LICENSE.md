@@ -1,4 +1,4 @@
-MIT License (https://opensource.org/license/mit)
+MIT License (https://choosealicense.com/licenses/mit)
 
 Copyright 2023 Noah Howadt
 

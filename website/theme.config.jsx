@@ -11,7 +11,7 @@ export default {
     text: (
       <span>
         {`© ${new Date().getFullYear()} Noah Howadt, `}
-        <a href="https://github.com/noahhowadt/stapel/blob/main/LICENSE">MIT License</a>
+        <a href="https://github.com/noahhowadt/stapel/blob/main/LICENSE.md">MIT License</a>
       </span>
     ),
   },
