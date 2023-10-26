@@ -1,22 +1,23 @@
-import { Modal, ModalOptionsBase, WarnModalOptions } from "./types";
+import { AcknowledgeModalOptions, CustomModal, CustomModalOptions, Modal, ModalOptionsBase, StackerProps, WarnModalOptions } from "./types";
 
 let modalsCounter = 1;
+type Subscriber = (modal: Array<Modal>) => void;
 
 class Observer {
-  subscribers: Array<(modal: Modal | null) => void>;
-  stack: ModalStack;
+  private subscribers: Array<Subscriber>;
+  private stack: ModalStack;
 
   constructor() {
     this.subscribers = [];
     this.stack = new ModalStack();
   }
 
-  subscribe = (subscriber: (modal: Modal | null) => void) => {
+  subscribe = (subscriber: Subscriber) => {
     this.subscribers.push(subscriber);
     return () => this.unsubscribe(subscriber);
   }
 
-  private unsubscribe = (subscriber: (modal: Modal | null) => void) => {
+  private unsubscribe = (subscriber: Subscriber) => {
     const index = this.subscribers.indexOf(subscriber);
     if(index !== -1) {
       this.subscribers.splice(index, 1);
@@ -27,11 +28,39 @@ class Observer {
     this.subscribers.forEach(subscriber => subscriber(this.stack.getCurrent()));
   }
 
-  default = (options: ModalOptionsBase) => {
+  custom = (component: React.ReactNode | ((id: string | number) => React.ReactNode), options?: CustomModalOptions & StackerProps) => {
+    const id = options?.id || modalsCounter++;
+    if(typeof component === "function") {
+      component = component(id);
+    }
+    const modal: CustomModal = {
+      ...options,
+      type: "custom",
+      id,
+      component
+    }
+    this.stack.push(modal);
+    this.notify();
+    return id;
+  }
+
+  plain = (options: ModalOptionsBase) => {
     const id = options.id || modalsCounter++;
     const modal: Modal = {
       ...options,
-      type: "default",
+      type: "plain",
+      id
+    }
+    this.stack.push(modal);
+    this.notify();
+    return id;
+  }
+
+  acknowledge = (options: AcknowledgeModalOptions) => {
+    const id = options.id || modalsCounter++;
+    const modal: Modal = {
+      ...options,
+      type: "acknowledge",
       id
     }
     this.stack.push(modal);
@@ -51,8 +80,13 @@ class Observer {
     return id;
   }
 
-  close = () => {
-    this.stack.pop();
+  close = (id?: string | number) => {
+    if(id) {
+      this.stack.getCurrent().filter(modal => modal.id === id)
+    } else {
+      this.stack.pop();
+    } 
+
     this.notify();
   }
 
@@ -66,6 +100,7 @@ class ModalStack {
   private stack: Array<Modal> = [];
 
   push(modal: Modal) {
+    if(this.stack.some(m => m.id === modal.id)) console.warn(`Modal with id ${modal.id} already exists`);
     this.stack.unshift(modal);
   }
 
@@ -74,8 +109,7 @@ class ModalStack {
   }
 
   getCurrent() {
-    if(this.stack.length > 0) return this.stack[0]
-    return null;
+    return [...this.stack];
   }
 
   clear() {
@@ -85,11 +119,12 @@ class ModalStack {
 
 export const ModalState = new Observer();
 
-const modalFunction = (options: ModalOptionsBase) => ModalState.default(options);
+const modalFunction = (options: ModalOptionsBase) => ModalState.plain(options);
 const basicModal = modalFunction
 
 export const modal = Object.assign(basicModal, {
   close: ModalState.close,
   closeAll: ModalState.closeAll,
-  warn: ModalState.warn
+  warn: ModalState.warn,
+  acknowledge: ModalState.acknowledge
 })

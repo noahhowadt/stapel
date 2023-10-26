@@ -1,10 +1,6 @@
 .stapel-stacker {
   z-index: 999999999;
   position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .stapel-stacker-bg {
@@ -13,6 +9,14 @@
   background-color: rgba(189, 189, 189, 0.6);
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
+}
+
+.stapel-modal-center {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .stapel-modal {
@@ -25,21 +29,20 @@
   width: 32rem;
   transition-property: opacity, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 75ms;
   overflow: hidden;
   background-color: #fff;
   padding: 1rem;
 }
 
-.stapel-modal-body {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
-
 .stapel-modal-content {
   position: relative;
   flex: 1;
+}
+
+.stapel-modal-icon-layout {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .stapel-modal-icon-container {
@@ -62,6 +65,13 @@
   border-radius: 0.5rem;
   background-color: #ffe6e6;
   color: #dc2626;
+}
+
+.stapel-modal-button-group {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  gap: 0.5rem;
 }
 
 .stapel-modal-close-button {

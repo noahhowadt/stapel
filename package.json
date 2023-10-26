@@ -1,18 +1,32 @@
 {
   "name": "stapel",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A flexible modal handling library for React.",
   "license": "MIT",
-  "private": true,
+  "author": "Noah Howadt",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "react",
+    "modal",
+    "dialog"
+  ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "dev": "tsup src/index.tsx --watch",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "prettier": "^3.0.3",
     "tsconfig": "*",
+    "tsup": "^7.2.0",
     "turbo": "1.10.16"
   },
   "packageManager": "yarn@1.22.19",
