@@ -1,16 +1,13 @@
 "use client";
-import "./styles.css";
 import { useEffect, useState } from "react";
-import { Modal, StackerProps } from "./types";
+import Backdrop from "./Backdrop";
+import ModalWrapper from "./ModalWrapper";
 import { ModalState, modal } from "./state";
-import { warnSvg } from "./assets";
-import ModalWrapper from "./modals/ModalWrapper";
-import WarnModal from "./modals/WarnModal";
-import AcknowledgeModal from "./modals/AcknowledgeModal";
-import PlainModal from "./modals/PlainModal";
+import "./styles.css";
+import { InternalModal, StackerOptions } from "./types";
 
-const Stacker = (props: StackerProps) => {
-  const [currentModals, setCurrentModals] = useState<Array<Modal>>([]);
+const Stacker = (props: StackerOptions) => {
+  const [currentModals, setCurrentModals] = useState<Array<InternalModal>>([]);
 
   useEffect(() => {
     const unsubscribe = ModalState.subscribe((modals) =>
@@ -26,22 +23,12 @@ const Stacker = (props: StackerProps) => {
   if (!currentModals.length) return;
   return (
     <div className="stapel-stacker">
-      <div
-        className={`stapel-stacker-bg ${props.modalBackdropOptions?.className}`}
-        style={props.modalBackdropOptions?.style}
-      />
-      {currentModals.map((m, i) =>
-        m.type === "custom" && m.headless ? (
-          m.component
-        ) : (
-          <ModalWrapper {...props} modal={m} isCurrent={i === 0} key={m.id}>
-            {m.type === "plain" ? <PlainModal options={m} /> : null}
-            {m.type === "acknowledge" ? <AcknowledgeModal options={m} /> : null}
-            {m.type === "warn" ? <WarnModal options={m} /> : null}
-            {m.type === "custom" ? m.component : null}
-          </ModalWrapper>
-        )
-      )}
+      <Backdrop renderBackdrop={props.renderBackdrop} />
+      {currentModals.map((m, i) => (
+        <ModalWrapper {...props} modal={m} isCurrent={i === 0} key={m.id}>
+          {m.render(m.id)}
+        </ModalWrapper>
+      ))}
     </div>
   );
 };

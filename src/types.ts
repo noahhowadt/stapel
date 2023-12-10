@@ -1,56 +1,41 @@
 import { CSSProperties } from "react";
 
-export type Modal = CustomModal | PlainModal | AcknowledgeModal | WarnModal
-
 // internal modal data
-export type WithInternalId<T> = Omit<T, "id"> & {id: string | number}
+export type ModalId = string | number;
+export type InternalModal = Omit<ModalOptions, "id"> & {
+  id: ModalId;
+  render: (id: ModalId) => React.ReactNode;
+};
 
-// custom modal
-export interface CustomModalOptions {
-  id?: string,
-  headless?: boolean;
-  onClose?: () => void;
-}
-export type CustomModal = {type: "custom"} & {component: React.ReactNode} & WithInternalId<CustomModalOptions>
-
-// standard modals
-export interface ModalOptionsBase {
+// modal options
+export interface ModalOptions {
   id?: string;
-  title: string;
-  content: string;
-  onClose?: () => void;
+  onClose?: (id: ModalId) => void;
 }
 
-// plain modal
-export type PlainModal = {type: "plain"} & WithInternalId<ModalOptionsBase>
+// stacker options
+type RenderWrapper =
+  | ((modal: InternalModal) => React.ReactNode)
+  | WrapperOptions;
+type RenderBackdrop = (() => React.ReactNode) | BackdropOptions | null;
 
-// acknowledge modal
-export interface AcknowledgeModalOptions extends ModalOptionsBase {
-  onAcknowledge?: () => void;
-}
-export type AcknowledgeModal = {type: "acknowledge"} & WithInternalId<AcknowledgeModalOptions>
-
-// warn modal
-export interface WarnModalOptions extends ModalOptionsBase {
-  onConfirm: () => void;
-  onCancel?: () => void;
-  confirmText?: string;
-}
-export type WarnModal = {type: "warn"} & WithInternalId<WarnModalOptions>
-
-// stacker props
-export interface Styling {
-  style?: CSSProperties;
-  className?: string;
-}
-
-export interface StackerProps {
-  modalOptions?: Styling & {
-    animation?: "none" | {
-      duration?: string,
-      offset?: string
-    };
-    showCloseButton?: boolean;
+interface WrapperOptions {
+  hideCloseButton?: boolean;
+  animation?: null | {
+    duration?: string;
+    offset?: string;
   };
-  modalBackdropOptions?: Styling;
+  className?: string;
+  style?: CSSProperties;
+}
+
+interface BackdropOptions {
+  closeOnClick?: boolean;
+  className?: string;
+  style?: CSSProperties;
+}
+
+export interface StackerOptions {
+  renderWrapper?: RenderWrapper;
+  renderBackdrop?: RenderBackdrop;
 }
