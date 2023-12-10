@@ -3,7 +3,7 @@ import AcknowledgeModal from "@/components/modals/AcknowledgeModal";
 import MultipleModalsModal from "@/components/modals/MultipleModalsModal";
 import { Link } from "nextra-theme-docs";
 import { useEffect } from "react";
-import { modal } from "stapel";
+import { Stacker, modal } from "stapel";
 
 export default function Home() {
   useEffect(() => {
@@ -15,6 +15,7 @@ export default function Home() {
 
   return (
     <div>
+      <Stacker />
       <div className="max-w-xl mx-auto mt-36 flex flex-col">
         <div className="flex flex-col items-center w-full mb-16">
           <h1 className="text-5xl font-bold mb-4">Stapel</h1>
