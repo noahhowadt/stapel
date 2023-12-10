@@ -4,14 +4,18 @@ import React from "react";
 interface Props {
   children?: React.ReactNode;
   onClick?: () => void;
-  isPressed?: boolean;
+  primary?: boolean;
 }
 
-function Button({ children, onClick, isPressed }: Props) {
+const primary =
+  "bg-black text-white font-semibold w-full border-black hover:bg-gray-900 transition-colors rounded";
+const secondary = "text-black text-sm w-full border-gray-100";
+
+function Button({ children, onClick, primary: isPrimary }: Props) {
   return (
     <button
-      className={`shadow rounded px-3 py-2 text-sm border-[1px] border-gray-100 ${
-        isPressed ? "bg-gray-100" : "bg-white"
+      className={`shadow rounded px-3 py-2 border-[1px] ${
+        isPrimary ? primary : secondary
       }`}
       onClick={onClick}
     >

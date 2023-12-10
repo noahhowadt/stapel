@@ -1,22 +1,25 @@
-"use client";
 import Button from "@/components/Button";
+import AcknowledgeModal from "@/components/modals/AcknowledgeModal";
+import MultipleModalsModal from "@/components/modals/MultipleModalsModal";
 import { Link } from "nextra-theme-docs";
-import { useState } from "react";
-import { Stacker, modal } from "stapel";
+import { useEffect } from "react";
+import { modal } from "stapel";
 
 export default function Home() {
-  const [type, setType] = useState<"plain" | "acknowledge" | "warning">(
-    "plain"
-  );
+  useEffect(() => {
+    const htmlEl = document.querySelector("html");
+    if (!htmlEl) return;
+    htmlEl.classList.remove("dark");
+    htmlEl.removeAttribute("style");
+  }, []);
 
   return (
     <div>
-      <Stacker />
       <div className="max-w-xl mx-auto mt-36 flex flex-col">
         <div className="flex flex-col items-center w-full mb-16">
           <h1 className="text-5xl font-bold mb-4">Stapel</h1>
           <span className="block text-lg mb-6">
-            A flexible modal handling library for React.
+            An unopinionated modal handling library for React.
           </span>
           <div className="flex max-w-sm gap-4 w-full justify-center">
             <Link href="/getting-started" className="flex-1">
@@ -37,60 +40,38 @@ export default function Home() {
           </div>
         </div>
 
-        <h2 className="text-3xl font-bold mb-4">Playground</h2>
-        <div className="flex flex-col">
-          <h3 className="text-xl font-bold mb-4">Type</h3>
-          <div className="flex gap-1 w-full">
-            <Button
-              onClick={() => setType("plain")}
-              isPressed={type === "plain"}
-            >
-              Default
-            </Button>
-            <Button
-              onClick={() => setType("acknowledge")}
-              isPressed={type === "acknowledge"}
-            >
-              Acknowledge
-            </Button>
-            <Button
-              onClick={() => setType("warning")}
-              isPressed={type === "warning"}
-            >
-              Warning
-            </Button>
+        <h2 className="text-3xl font-bold mb-4">Features</h2>
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col">
+            <div className="flex gap-1 w-full">
+              <Button
+                onClick={() =>
+                  modal.open(() => (
+                    <div>
+                      <p>
+                        Stapel only comes with the most basic default styles for
+                        the modal window (and these can also be overridden). The
+                        content inside the modal is totally up to you.
+                      </p>
+                      <p>
+                        <strong>Fun fact:</strong> If you don't style your
+                        modals, they will look terrible, just like this one.
+                      </p>
+                    </div>
+                  ))
+                }
+              >
+                Unopinionated
+              </Button>
+              <Button onClick={() => modal.open(() => <AcknowledgeModal />)}>
+                Flexible
+              </Button>
+              <Button onClick={() => modal.open(() => <MultipleModalsModal />)}>
+                Multiple modals
+              </Button>
+            </div>
           </div>
         </div>
-        <button
-          className="shadow rounded px-3 py-2 bg-black text-white font-semibold w-full border-[1px] border-black hover:bg-gray-900 transition-colors mt-6"
-          onClick={() => {
-            switch (type) {
-              case "plain":
-                modal({
-                  title: "Plain Modal",
-                  content: "This is a plain modal.",
-                });
-                break;
-              case "acknowledge":
-                modal.acknowledge({
-                  title: "Acknowledge Modal",
-                  content: "This is an acknowledge modal.",
-                });
-                break;
-              case "warning":
-                modal.warn({
-                  title: "Warning Modal",
-                  content: "This is a warning modal.",
-                  onConfirm: () => {
-                    alert("Confirmed!");
-                  },
-                });
-                break;
-            }
-          }}
-        >
-          Open Modal
-        </button>
       </div>
     </div>
   );
