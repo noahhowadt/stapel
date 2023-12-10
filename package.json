@@ -1,7 +1,7 @@
 {
   "name": "stapel",
-  "version": "0.2.0",
-  "description": "A flexible modal handling library for React.",
+  "version": "0.3.0",
+  "description": "An unopinionated modal handling library for React.",
   "license": "MIT",
   "author": "Noah Howadt",
   "exports": {
