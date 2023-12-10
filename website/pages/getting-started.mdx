@@ -1,3 +1,76 @@
+import { Steps, Tab, Tabs } from "nextra-theme-docs";
+
 # Getting Started
 
-**Stapel** is a flexible modal handling library for React. It is designed to be as unopinionated and customizable as possible, while still providing easy-to-use default styles.
+**Stapel** is an unopinionated modal handling library for React.
+
+    <Steps>
+    ### Install
+      <Tabs items={['yarn', 'npm', 'pnpm']}>
+              <Tab>
+            ```bash
+    yarn add stapel
+    ```
+            </Tab>
+
+  <Tab>
+      ```bash
+    npm i stapel
+    ```
+            </Tab>
+  <Tab>
+      ```bash
+    pnpm i stapel
+    ```
+            </Tab>
+              </Tabs>
+
+### Add the Stacker to your app
+
+It is recommended to add the Stacker component to your root layout, e.g. `layout.tsx`.
+
+```tsx
+import { Stacker } from "stapel";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Stacker />
+      </body>
+    </html>
+  );
+}
+```
+
+### Render a modal
+
+```tsx
+import { modal } from "stapel";
+
+function MyComponent() {
+  // ...
+
+  return (
+    <button
+      onClick={() =>
+        modal.open(() => (
+          <div>
+            <h1>My first modal!</h1>
+            <button onClick={() => modal.close()}>Close modal</button>
+          </div>
+        ))
+      }
+    >
+      Open modal
+    </button>
+  );
+}
+```
+
+    </Steps>

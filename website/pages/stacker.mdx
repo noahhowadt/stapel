@@ -1,0 +1,24 @@
+# Stacker
+
+This component renders all modals, place it in the root layout of your app.
+
+## Usage
+
+```tsx
+import { Stacker } from "stapel";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Stacker />
+      </body>
+    </html>
+  );
+}
+```

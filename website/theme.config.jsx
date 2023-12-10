@@ -4,6 +4,11 @@ export default {
     link: 'https://github.com/noahhowadt/stapel'
   },
   docsRepositoryBase: 'https://github.com/noahhowadt/stapel/tree/main/website',
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s – Stapel',
+    };
+  },
   feedback: {
     content: null
   },
