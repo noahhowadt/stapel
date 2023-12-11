@@ -16,10 +16,6 @@ const Stacker = (props: StackerOptions) => {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    console.log(currentModals);
-  }, [currentModals]);
-
   if (!currentModals.length) return;
   return (
     <div className="stapel-stacker">
