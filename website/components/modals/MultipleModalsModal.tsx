@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { modal } from "stapel";
 import Button from "../Button";
 import Input from "../Input";
@@ -7,10 +7,6 @@ function MultipleModalsModal() {
   const [value, setValue] = useState(
     "The state of the modals is preserved. Try it!"
   );
-
-  useEffect(() => {
-    console.log("MultipleModalsModal mounted");
-  }, []);
 
   return (
     <div className="flex flex-col gap-4">
