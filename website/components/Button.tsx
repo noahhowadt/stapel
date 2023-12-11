@@ -9,7 +9,7 @@ interface Props {
 
 const primary =
   "bg-black text-white font-semibold w-full border-black hover:bg-gray-900 transition-colors rounded";
-const secondary = "text-black text-sm w-full border-gray-100";
+const secondary = "bg-white text-black text-sm w-full border-gray-100";
 
 function Button({ children, onClick, primary: isPrimary }: Props) {
   return (
