@@ -10,13 +10,19 @@ interface ModalWrapperProps extends StackerOptions {
   isCurrent: boolean;
 }
 
+const DEFAULT_ANIMATION_OFFSET = "1.5rem";
+const DEFAULT_ANIMATION_DURATION = "150ms";
+
 function ModalWrapper(props: ModalWrapperProps) {
   const [isMounted, setIsMounted] = useState(false);
   const handleClose = props.modal.onClose || ((id) => modalHandler.close(id));
 
   useEffect(() => {
-    if (props.isCurrent && typeof props.renderWrapper !== "function") {
-      if (props.renderWrapper?.animation === null) {
+    if (props.isCurrent) {
+      if (
+        typeof props.renderWrapper == "function" ||
+        props.renderWrapper?.animation === null
+      ) {
         setIsMounted(true);
       } else {
         setTimeout(() => setIsMounted(true), 0);
@@ -27,25 +33,31 @@ function ModalWrapper(props: ModalWrapperProps) {
   }, [props.isCurrent]);
 
   return (
-    <div style={{ display: props.isCurrent ? "block" : "none" }}>
+    <div
+      style={{
+        display: props.isCurrent ? "block" : "none",
+        position: "relative",
+      }}
+    >
       {typeof props.renderWrapper === "function" ? (
-        props.renderWrapper(props.modal)
+        props.renderWrapper(props.modal, isMounted)
       ) : (
         <div
-          className={`stapel-modal ${props.renderWrapper?.className || ""}`}
+          className="stapel-modal"
           style={{
-            ...props.renderWrapper?.style,
             opacity: isMounted ? 1 : 0,
             transform:
               isMounted || props.renderWrapper?.animation === null
                 ? ""
                 : `translateY(${
-                    props.renderWrapper?.animation?.offset || "1.5rem"
+                    props.renderWrapper?.animation?.offset ||
+                    DEFAULT_ANIMATION_OFFSET
                   })`,
             transitionDuration:
               props.renderWrapper?.animation === null
                 ? undefined
-                : props.renderWrapper?.animation?.duration || "150ms",
+                : props.renderWrapper?.animation?.duration ||
+                  DEFAULT_ANIMATION_DURATION,
           }}
         >
           {props.renderWrapper?.hideCloseButton !== true ? (

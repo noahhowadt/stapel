@@ -1,5 +1,3 @@
-import { CSSProperties } from "react";
-
 // internal modal data
 export type ModalId = string | number;
 export type InternalModal = Omit<ModalOptions, "id"> & {
@@ -15,7 +13,7 @@ export interface ModalOptions {
 
 // stacker options
 type RenderWrapper =
-  | ((modal: InternalModal) => React.ReactNode)
+  | ((modal: InternalModal, isMounted: boolean) => React.ReactNode)
   | WrapperOptions;
 type RenderBackdrop = (() => React.ReactNode) | BackdropOptions | null;
 
@@ -25,14 +23,10 @@ interface WrapperOptions {
     duration?: string;
     offset?: string;
   };
-  className?: string;
-  style?: CSSProperties;
 }
 
 interface BackdropOptions {
   closeOnClick?: boolean;
-  className?: string;
-  style?: CSSProperties;
 }
 
 export interface StackerOptions {

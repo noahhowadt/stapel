@@ -1,3 +1,4 @@
+"use client";
 import { modal } from "./state";
 import { StackerOptions } from "./types";
 
@@ -10,8 +11,7 @@ function Backdrop({ renderBackdrop }: Props) {
   if (typeof renderBackdrop === "function") return renderBackdrop();
   return (
     <div
-      className={`stapel-stacker-bg ${renderBackdrop?.className || ""}`}
-      style={renderBackdrop?.style}
+      className="stapel-stacker-bg"
       onClick={renderBackdrop?.closeOnClick ? modal.closeAll : undefined}
     />
   );
