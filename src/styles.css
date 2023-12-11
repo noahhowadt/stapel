@@ -28,6 +28,7 @@
   overflow: hidden;
   background-color: #fff;
   min-height: 100px;
+  padding: 16px;
 }
 
 .stapel-modal-close-button {
