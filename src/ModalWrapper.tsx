@@ -26,9 +26,8 @@ function ModalWrapper(props: ModalWrapperProps) {
     return () => setIsMounted(false);
   }, [props.isCurrent]);
 
-  if (!props.isCurrent) return null;
   return (
-    <div>
+    <div style={{ display: props.isCurrent ? "block" : "none" }}>
       {typeof props.renderWrapper === "function" ? (
         props.renderWrapper(props.modal)
       ) : (
@@ -46,7 +45,7 @@ function ModalWrapper(props: ModalWrapperProps) {
             transitionDuration:
               props.renderWrapper?.animation === null
                 ? undefined
-                : props.renderWrapper?.animation?.duration || "100ms",
+                : props.renderWrapper?.animation?.duration || "150ms",
           }}
         >
           {props.renderWrapper?.hideCloseButton !== true ? (
