@@ -48,27 +48,26 @@ export default function Home() {
               <Button
                 onClick={() =>
                   modal.open(() => (
-                    <div>
+                    <div className="flex flex-col gap-4">
+                      <h2 className="text-lg font-semibold">
+                        Get started quickly
+                      </h2>
                       <p>
-                        Stapel only comes with the most basic default styles for
-                        the modal window (and these can also be overridden). The
-                        content inside the modal is totally up to you.
-                      </p>
-                      <p>
-                        <strong>Fun fact:</strong> If you don't style your
-                        modals, they will look terrible, just like this one.
+                        Stapel comes with simple default styles and animations
+                        for the modal window to get you started quickly. All you
+                        have to do is provide the content for the modal.
                       </p>
                     </div>
                   ))
                 }
               >
-                Unopinionated
+                Smart defaults
               </Button>
               <Button onClick={() => modal.open(() => <AcknowledgeModal />)}>
-                Flexible
+                Customizable
               </Button>
               <Button onClick={() => modal.open(() => <MultipleModalsModal />)}>
-                Multiple modals
+                Modal stack managment
               </Button>
             </div>
           </div>
