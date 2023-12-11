@@ -63,7 +63,11 @@ class ModalStack {
 
   push(modal: InternalModal) {
     if (this.stack.some((m) => m.id === modal.id))
-      console.warn(`Modal with id ${modal.id} already exists`);
+      console.warn(
+        `Modal with id ${modal.id} already exists. Each modal should have a unique id.`
+      );
+    if (this.stack.length == 100)
+      console.warn("More than 100 modals open. Check for endless loops.");
     this.stack.unshift(modal);
   }
 
