@@ -1,4 +1,3 @@
-import React from "react";
 import Button from "@/components/Button";
 import AcknowledgeModal from "@/components/modals/AcknowledgeModal";
 import MultipleModalsModal from "@/components/modals/MultipleModalsModal";
