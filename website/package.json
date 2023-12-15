@@ -14,7 +14,7 @@
     "nextra-theme-docs": "^2.13.2",
     "react": "^18",
     "react-dom": "^18",
-    "stapel": "*"
+    "stapel": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20",
