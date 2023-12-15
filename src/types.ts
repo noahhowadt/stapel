@@ -1,35 +1,37 @@
+import React from "react";
 // internal modal data
 export type ModalId = string | number;
 export type InternalModal = Omit<ModalOptions, "id"> & {
   id: ModalId;
-  render: (id: ModalId) => React.ReactNode;
+  render: () => React.ReactNode;
+  close: () => void;
 };
 
-// modal options
+// modal wrapper
+export type RenderModalWrapper = (
+  modal: InternalModal,
+  isMounted: boolean
+) => React.ReactNode;
+export interface ModalWrapperOptions {
+  hideCloseButton?: boolean;
+}
+type ModalWrapperOptionsOrRender = RenderModalWrapper | ModalWrapperOptions;
+
+// backdrop
+export type RenderBackdrop = () => React.ReactNode | null;
 export interface ModalOptions {
   id?: string;
   onClose?: (id: ModalId) => void;
+  options?: StackerOptions;
 }
 
 // stacker options
-type RenderWrapper =
-  | ((modal: InternalModal, isMounted: boolean) => React.ReactNode)
-  | WrapperOptions;
-type RenderBackdrop = (() => React.ReactNode) | BackdropOptions | null;
-
-interface WrapperOptions {
-  hideCloseButton?: boolean;
+export interface StackerOptions {
+  modalWrapper?: ModalWrapperOptionsOrRender;
+  backdrop?: RenderBackdrop;
+  closeAllOnBackdropClick?: boolean;
   animation?: null | {
     duration?: string;
     offset?: string;
   };
-}
-
-interface BackdropOptions {
-  closeOnClick?: boolean;
-}
-
-export interface StackerOptions {
-  renderWrapper?: RenderWrapper;
-  renderBackdrop?: RenderBackdrop;
 }

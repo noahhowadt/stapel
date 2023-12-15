@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { closeSvg } from "./assets";
 import { modal as modalHandler } from "./state";
 import { InternalModal, StackerOptions } from "./types";
@@ -10,19 +10,13 @@ interface ModalWrapperProps extends StackerOptions {
   isCurrent: boolean;
 }
 
-const DEFAULT_ANIMATION_OFFSET = "1.5rem";
-const DEFAULT_ANIMATION_DURATION = "150ms";
-
 function ModalWrapper(props: ModalWrapperProps) {
   const [isMounted, setIsMounted] = useState(false);
   const handleClose = props.modal.onClose || ((id) => modalHandler.close(id));
 
   useEffect(() => {
     if (props.isCurrent) {
-      if (
-        typeof props.renderWrapper == "function" ||
-        props.renderWrapper?.animation === null
-      ) {
+      if (typeof props.modalWrapper == "function" || props.animation === null) {
         setIsMounted(true);
       } else {
         setTimeout(() => setIsMounted(true), 0);
@@ -39,28 +33,22 @@ function ModalWrapper(props: ModalWrapperProps) {
         position: "relative",
       }}
     >
-      {typeof props.renderWrapper === "function" ? (
-        props.renderWrapper(props.modal, isMounted)
+      {typeof props.modalWrapper == "function" ? (
+        props.modalWrapper(props.modal, isMounted)
       ) : (
         <div
           className="stapel-modal"
           style={{
             opacity: isMounted ? 1 : 0,
             transform:
-              isMounted || props.renderWrapper?.animation === null
+              isMounted || props.animation === null
                 ? ""
-                : `translateY(${
-                    props.renderWrapper?.animation?.offset ||
-                    DEFAULT_ANIMATION_OFFSET
-                  })`,
+                : `translateY(${props.animation?.offset})`,
             transitionDuration:
-              props.renderWrapper?.animation === null
-                ? undefined
-                : props.renderWrapper?.animation?.duration ||
-                  DEFAULT_ANIMATION_DURATION,
+              props.animation === null ? undefined : props.animation?.duration,
           }}
         >
-          {props.renderWrapper?.hideCloseButton !== true ? (
+          {props.modalWrapper?.hideCloseButton !== true ? (
             <button
               onClick={() => handleClose(props.modal.id)}
               className="stapel-modal-close-button"

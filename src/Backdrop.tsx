@@ -1,18 +1,25 @@
 "use client";
+import React from "react";
 import { modal } from "./state";
-import { StackerOptions } from "./types";
+import { RenderBackdrop } from "./types";
 
 interface Props {
-  renderBackdrop: StackerOptions["renderBackdrop"];
+  closeOnClick?: boolean;
+  render?: RenderBackdrop;
 }
 
-function Backdrop({ renderBackdrop }: Props) {
-  if (renderBackdrop === null) return null;
-  if (typeof renderBackdrop === "function") return renderBackdrop();
+function Backdrop({ closeOnClick, render }: Props) {
+  if (render === null) return null;
+  if (render !== undefined) {
+    return (
+      <div onClick={closeOnClick ? modal.closeAll : undefined}>{render()}</div>
+    );
+  }
+
   return (
     <div
       className="stapel-stacker-bg"
-      onClick={renderBackdrop?.closeOnClick ? modal.closeAll : undefined}
+      onClick={closeOnClick ? modal.closeAll : undefined}
     />
   );
 }

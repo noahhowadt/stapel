@@ -1,3 +1,4 @@
+import React from "react";
 import Button from "@/components/Button";
 import AcknowledgeModal from "@/components/modals/AcknowledgeModal";
 import MultipleModalsModal from "@/components/modals/MultipleModalsModal";
@@ -15,7 +16,32 @@ export default function Home() {
 
   return (
     <div>
-      <Stacker />
+      {/*<Stacker
+        renderWrapper={(renderModal, isMounted) => (
+          <div
+            className={`bg-gray-100 w-[700px] rounded p-8 duration-200 shadow-lg ${
+              isMounted ? "opacity-100" : "translate-x-16 opacity-0"
+            }`}
+          >
+            {renderModal.render(renderModal.id)}
+            <div className="h-4" />
+            <Button onClick={() => modal.close(renderModal.id)}>Close</Button>
+          </div>
+        )}
+        renderBackdrop={() => (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50"
+            onClick={modal.closeAll}
+          />
+        )}
+        />*/}
+      <Stacker
+      /*backdropOptions={{
+          render: () => (
+            <div className="fixed inset-0 bg-black bg-opacity-50" />
+          ),
+        }}*/
+      />
       <div className="max-w-xl mx-auto mt-36 flex flex-col">
         <div className="flex flex-col items-center w-full mb-16">
           <h1 className="text-5xl font-bold mb-4">Stapel</h1>

@@ -34,7 +34,13 @@ class Observer {
     render: (id: ModalId) => React.ReactNode,
     modal: ModalOptions = {}
   ) => {
-    this.stack.push({ ...modal, id: modal.id || modalsCounter++, render });
+    const id = modal.id || modalsCounter++;
+    this.stack.push({
+      ...modal,
+      id,
+      render: () => render(id),
+      close: () => this.close(modal.id),
+    });
     this.notify();
   };
 
