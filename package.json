@@ -19,8 +19,9 @@
     "dialog"
   ],
   "scripts": {
-    "build": "turbo run build",
+    "build": "tsup src/index.tsx",
     "dev": "tsup src/index.tsx --watch",
+    "dev:website": "turbo run dev --filter=website...",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "preinstall": "npx only-allow pnpm"
   },
