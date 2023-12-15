@@ -4,6 +4,14 @@
   "description": "An unopinionated modal handling library for React.",
   "license": "MIT",
   "author": "Noah Howadt",
+  "homepage": "https://stapel.noahhowadt.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noahhowadt/stapel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/noahhowadt/stapel/issues"
+  },
   "exports": {
     "types": "./dist/index.d.ts",
     "import": "./dist/index.mjs",
