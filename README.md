@@ -1,4 +1,4 @@
-# Stacker
+# Stapel
 
 An unopinionated modal handling library for React.
 IMPORTANT: This package is still WIP. There may be breaking changes.
