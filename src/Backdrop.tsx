@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { modal } from "./state";
 import { RenderBackdrop } from "./types";
 

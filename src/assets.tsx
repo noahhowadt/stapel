@@ -1,5 +1,3 @@
-import React from "react";
-
 export const closeSvg = (
   <svg
     className="stapel-modal-close"

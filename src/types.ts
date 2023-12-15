@@ -1,4 +1,3 @@
-import React from "react";
 // internal modal data
 export type ModalId = string | number;
 export type InternalModal = Omit<ModalOptions, "id"> & {

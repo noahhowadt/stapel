@@ -1,4 +1,3 @@
-import React from "react";
 import type { AppProps } from "next/app";
 import type { ReactElement } from "react";
 import "../globals.css";
