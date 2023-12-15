@@ -32,7 +32,7 @@ importers:
       postcss: ^8
       react: ^18
       react-dom: ^18
-      stapel: '*'
+      stapel: workspace:*
       tailwindcss: ^3
       typescript: ^5
     dependencies:
