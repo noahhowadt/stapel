@@ -7,4 +7,5 @@ export default defineConfig({
   sourcemap: true,
   format: ["esm", "cjs"],
   injectStyle: true,
+  dts: true,
 });
