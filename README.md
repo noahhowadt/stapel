@@ -1,7 +1,8 @@
 # Stapel
 
-An unopinionated modal handling library for React.
-IMPORTANT: This package is still WIP. There may be breaking changes.
+An unopinionated modal handling library for React.  
+> [!WARNING]
+> This package is still a WIP. There may be breaking changes.
 
 ## Documentation
 
