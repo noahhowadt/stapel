@@ -2,7 +2,7 @@
 
 An unopinionated modal handling library for React.  
 > [!WARNING]
-> This package is still a WIP. There may be breaking changes.
+> This package is still a work in progress (WIP). Expect potential breaking changes, even in minor version updates.
 
 ## Documentation
 
