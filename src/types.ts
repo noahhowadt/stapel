@@ -20,7 +20,6 @@ type ModalWrapperOptionsOrRender = RenderModalWrapper | ModalWrapperOptions;
 export type RenderBackdrop = () => React.ReactNode | null;
 export interface ModalOptions {
   id?: string;
-  onClose?: (id: ModalId) => void;
   options?: StackerOptions;
 }
 
