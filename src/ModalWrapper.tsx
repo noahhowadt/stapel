@@ -12,7 +12,6 @@ interface ModalWrapperProps extends StackerOptions {
 
 function ModalWrapper(props: ModalWrapperProps) {
   const [isMounted, setIsMounted] = useState(false);
-  const handleClose = props.modal.onClose || ((id) => modalHandler.close(id));
 
   useEffect(() => {
     if (props.isCurrent) {
@@ -50,7 +49,7 @@ function ModalWrapper(props: ModalWrapperProps) {
         >
           {props.modalWrapper?.hideCloseButton !== true ? (
             <button
-              onClick={() => handleClose(props.modal.id)}
+              onClick={() => modalHandler.close(props.modal.id)}
               className="stapel-modal-close-button"
             >
               {closeSvg}
