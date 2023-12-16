@@ -16,16 +16,14 @@ const DEFAULT_OPTIONS: StackerOptions = {
 
 const Stacker = (props: StackerOptions) => {
   const [currentModals, setCurrentModals] = useState<Array<InternalModal>>([]);
-  const options: StackerOptions = {
-    ...DEFAULT_OPTIONS,
-    ...props,
-    ...currentModals[0]?.options,
-  };
+  const [options, setOptions] = useState({ ...DEFAULT_OPTIONS, ...props });
 
   useEffect(() => {
-    const unsubscribe = ModalState.subscribe((modals) =>
-      setCurrentModals(modals)
-    );
+    const unsubscribe = ModalState.subscribe((modals) => {
+      setCurrentModals(modals);
+      if (!modals.length) return setOptions({ ...DEFAULT_OPTIONS, ...props });
+      setOptions({ ...DEFAULT_OPTIONS, ...props, ...modals[0].options });
+    });
     return () => unsubscribe();
   }, []);
 
