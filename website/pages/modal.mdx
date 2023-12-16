@@ -1,0 +1,90 @@
+# Modal()
+
+You can call this function anywhere in your app to open or close modals. You can also get the ids of the currently open modals.
+
+## Opening a modal
+
+To open a modal, just pass it a function that returns the content of the modal.
+
+```tsx
+import { modal } from "stapel";
+
+modal.open((id) => (
+  <div>
+    <h1>My first modal!</h1>
+    <button onClick={() => modal.close(id)}>Close modal</button>
+  </div>
+));
+```
+
+You can also pass a custom id to the `modal.open()` function. This way you can address the modal using this id later on.
+
+```tsx
+import { modal } from "stapel";
+
+modal.open(
+  () => (
+    <div>
+      <h1>My first modal!</h1>
+    </div>
+  ),
+  {
+    id: "my-modal",
+  }
+);
+```
+
+Additionally, you can overwrite the default options for the modal using the `options` parameter. For all options see [Stacker customization](/stacker#customization).
+
+```tsx
+import { modal } from "stapel";
+
+modal.open(
+  () => (
+    <div>
+      <h1>My first modal!</h1>
+    </div>
+  ),
+  {
+    options: {
+      animation: {
+        offset: "1.5rem",
+        duration: "400ms",
+      },
+      backdrop: () => null,
+    },
+  }
+);
+```
+
+## Closing modals
+
+You can close the topmost modal by calling `modal.close()` without any arguments.
+
+```tsx
+import { modal } from "stapel";
+
+modal.close();
+```
+
+If you want to close a modal with a specific id, pass it to the `modal.close()` function.
+
+```tsx
+import { modal } from "stapel";
+
+modal.close("my-modal");
+```
+
+To close all modals, call `modal.closeAll()`.
+
+```tsx
+import { modal } from "stapel";
+
+modal.closeAll();
+```
+
+## Getting the ids of the currently open modals
+
+```tsx
+const openModalIds = modal.getStack();
+```
