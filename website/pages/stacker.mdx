@@ -1,6 +1,6 @@
 # Stacker
 
-This component renders all modals, place it in the root layout of your app.
+This component renders all modals, place it at the root of your app (e.g. layout.tsx, \_app.tsx).
 
 ## Usage
 
@@ -21,4 +21,58 @@ export default function RootLayout({
     </html>
   );
 }
+```
+
+## Customization
+
+### Modal wrapper
+
+You can either pass options to the modal wrapper or render a completely custom modal wrapper. The modal wrapper is the wrapper around every rendered modal.
+
+#### Options
+
+Currently you can only adjust if the close button is rendered.
+
+```tsx
+<Stacker modalWrapper={{ hideCloseButton: true }} />
+```
+
+#### Custom modal wrapper
+
+```tsx
+<Stacker
+  modalWrapper={(modal, isMounted) => (
+    <div
+      className={`bg-gray-100 w-[700px] rounded p-4 duration-200 shadow-lg ${
+        isMounted ? "opacity-100" : "translate-x-16 opacity-0"
+      }`}
+    >
+      {modal.render()}
+      <div className="h-4" />
+      <Button onClick={() => modal.close()}>Close</Button>
+    </div>
+  )}
+/>
+```
+
+### Backdrop
+
+If you need to adjust the styling of the backdrop, you can render a custom component. If you don't want a backdrop, you can return `null`.
+
+```tsx
+<Stacker
+  backdrop={() => <div className="fixed inset-0 bg-black bg-opacity-50" />}
+/>
+```
+
+### Close all modals on backdrop click
+
+```tsx
+<Stacker closeAllOnBackdropClick />
+```
+
+### Animation
+
+```tsx
+<Stacker animation={{ duration: "400ms", offset: "-10px" }} />
 ```
