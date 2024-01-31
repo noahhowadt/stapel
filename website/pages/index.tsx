@@ -15,7 +15,15 @@ export default function Home() {
 
   return (
     <div>
-      <Stacker />
+      <Stacker
+        modalOptions={{
+          animation: {
+            duration: "0.2s",
+            scale: 0.95,
+            opacity: 0,
+          },
+        }}
+      />
       <div className="max-w-xl mx-auto mt-36 flex flex-col">
         <div className="flex flex-col items-center w-full mb-16">
           <h1 className="text-5xl font-bold mb-4">Stapel</h1>

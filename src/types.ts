@@ -1,35 +1,53 @@
+// exact type
+/*export type Exact<T, Struct> = T extends Struct
+  ? Exclude<keyof T, keyof Struct> extends never
+    ? T
+    : never
+  : never;*/
+
 // internal modal data
 export type ModalId = string | number;
-export type InternalModal = Omit<ModalOptions, "id"> & {
+export type InternalModal = Omit<ModalProps, "id"> & {
   id: ModalId;
   render: () => React.ReactNode;
   close: () => void;
 };
 
-// modal wrapper
-export type RenderModalWrapper = (
-  modal: InternalModal,
-  isMounted: boolean
-) => React.ReactNode;
-export interface ModalWrapperOptions {
-  hideCloseButton?: boolean;
-}
-type ModalWrapperOptionsOrRender = RenderModalWrapper | ModalWrapperOptions;
-
-// backdrop
-export type RenderBackdrop = () => React.ReactNode | null;
-export interface ModalOptions {
+// modal props
+export interface ModalProps {
   id?: string;
-  options?: StackerOptions;
+  modalOptions?: ModalOptions;
+  backdropOptions?: BackdropOptions;
 }
 
-// stacker options
-export interface StackerOptions {
-  modalWrapper?: ModalWrapperOptionsOrRender;
-  backdrop?: RenderBackdrop;
-  closeAllOnBackdropClick?: boolean;
+export type Either<T, U> =
+  | ({ [P in keyof T]: T[P] } & { [P in keyof U]: never })
+  | ({ [P in keyof U]: U[P] } & { [P in keyof T]: never });
+
+export type ModalOptions = Either<
+  { render?: (modal: InternalModal, isMounted: boolean) => React.ReactNode },
+  {
+    className?: string;
+    style?: React.CSSProperties;
+    hideCloseButton?: boolean;
+  }
+> & {
   animation?: null | {
+    translateX?: string;
+    translateY?: string;
+    scale?: number;
+    opacity?: number;
     duration?: string;
-    offset?: string;
+    // easing?: string;
   };
-}
+};
+
+export type BackdropOptions = (
+  | { render?: () => React.ReactNode }
+  | {
+      className?: string;
+      style?: React.CSSProperties;
+    }
+) & {
+  closeAllOnClick?: boolean;
+};

@@ -1,4 +1,4 @@
-import { InternalModal, ModalId, ModalOptions } from "./types";
+import { InternalModal, ModalId, ModalProps } from "./types";
 
 let modalsCounter = 1;
 type Subscriber = (modal: Array<InternalModal>) => void;
@@ -30,10 +30,7 @@ class Observer {
     );
   };
 
-  open = (
-    render: (id: ModalId) => React.ReactNode,
-    modal: ModalOptions = {}
-  ) => {
+  open = (render: (id: ModalId) => React.ReactNode, modal: ModalProps = {}) => {
     const id = modal.id || modalsCounter++;
     this.stack.push({
       ...modal,

@@ -1,46 +1,93 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Backdrop from "./Backdrop";
 import ModalWrapper from "./ModalWrapper";
 import { ModalState, modal } from "./state";
 import "./styles.css";
-import { InternalModal, StackerOptions } from "./types";
+import {
+  BackdropOptions,
+  Either,
+  InternalModal,
+  ModalOptions,
+  ModalProps,
+} from "./types";
 
-const DEFAULT_OPTIONS: StackerOptions = {
-  closeAllOnBackdropClick: false,
-  animation: {
-    offset: "1.5rem",
-    duration: "150ms",
+type StackerProps = Either<
+  {
+    modalOptions?: ModalOptions;
+    backdropOptions?: BackdropOptions;
   },
+  {
+    headless?: boolean;
+  }
+>;
+
+const DEFAULT_OPTIONS: ModalProps = {
+  modalOptions: {
+    animation: {
+      duration: "150ms",
+      translateY: "1.5rem",
+      opacity: 0,
+    },
+  },
+  backdropOptions: {},
 };
 
-const Stacker = (props: StackerOptions) => {
+function mergeOptions(
+  stackerProps: StackerProps,
+  currentModalProps: ModalProps
+): ModalProps {
+  return {
+    // @ts-ignore
+    modalOptions: {
+      ...DEFAULT_OPTIONS.modalOptions,
+      ...stackerProps.modalOptions,
+      ...currentModalProps.modalOptions,
+    },
+    backdropOptions: {
+      ...DEFAULT_OPTIONS.backdropOptions,
+      ...stackerProps.backdropOptions,
+      ...currentModalProps.backdropOptions,
+    },
+  };
+}
+
+function Stacker(props: StackerProps) {
   const [currentModals, setCurrentModals] = useState<Array<InternalModal>>([]);
-  const [options, setOptions] = useState({ ...DEFAULT_OPTIONS, ...props });
+  const [options, setOptions] = useState<ModalProps>(mergeOptions(props, {}));
 
   useEffect(() => {
     const unsubscribe = ModalState.subscribe((modals) => {
       setCurrentModals(modals);
       if (!modals.length) return setOptions({ ...DEFAULT_OPTIONS, ...props });
-      setOptions({ ...DEFAULT_OPTIONS, ...props, ...modals[0].options });
+      setOptions(
+        mergeOptions(props, {
+          modalOptions: modals[0].modalOptions,
+          backdropOptions: modals[0].backdropOptions,
+        })
+      );
     });
     return () => unsubscribe();
   }, []);
+  console.log(options.modalOptions);
 
   if (!currentModals.length) return;
+  if ("headless" in options) return currentModals[0].render();
   return (
     <div className="stapel-stacker">
-      <Backdrop
-        closeOnClick={options.closeAllOnBackdropClick}
-        render={options.backdrop}
-      />
+      <Backdrop options={options.backdropOptions} />
       {currentModals.map((m, i) => (
-        <ModalWrapper {...options} modal={m} isCurrent={i === 0} key={m.id}>
+        <ModalWrapper
+          modal={m}
+          isCurrent={i === 0}
+          key={m.id}
+          modalOptions={options.modalOptions}
+        >
           {m.render()}
         </ModalWrapper>
       ))}
     </div>
   );
-};
+}
 
 export { Stacker, modal };
