@@ -38,7 +38,7 @@ function mergeOptions(
   currentModalProps: ModalProps
 ): ModalProps {
   return {
-    // @ts-ignore
+    // @ts-ignore - Render method doesn't need to be defined
     modalOptions: {
       ...DEFAULT_OPTIONS.modalOptions,
       ...stackerProps.modalOptions,
@@ -69,10 +69,14 @@ function Stacker(props: StackerProps) {
     });
     return () => unsubscribe();
   }, []);
-  console.log(options.modalOptions);
 
   if (!currentModals.length) return;
-  if ("headless" in options) return currentModals[0].render();
+  if (props.headless)
+    return currentModals.map((m, i) => (
+      <div style={{ display: i === 0 ? "block" : "none" }} key={m.id}>
+        {m.render()}
+      </div>
+    ));
   return (
     <div className="stapel-stacker">
       <Backdrop options={options.backdropOptions} />
