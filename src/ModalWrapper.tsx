@@ -20,10 +20,8 @@ function ModalWrapper(props: ModalWrapperProps) {
         "render" in props.modalOptions ||
         props.modalOptions.animation === null
       ) {
-        console.log("setting directly");
         setIsMounted(true);
       } else {
-        console.log("setting timeout");
         setTimeout(() => setIsMounted(true), 0);
       }
     }
