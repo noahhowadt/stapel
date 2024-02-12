@@ -7,9 +7,12 @@
   justify-content: center;
 }
 
-.stapel-stacker-bg {
+.stapel-backdrop-base {
   position: fixed;
   inset: 0;
+}
+
+.stapel-backdrop {
   background-color: rgba(189, 189, 189, 0.6);
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);

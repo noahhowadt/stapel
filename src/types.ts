@@ -43,13 +43,13 @@ export type ModalOptions = Either<
   };
 };
 
-export type BackdropOptions = (
-  | { render?: () => React.ReactNode }
-  | {
-      className?: string;
-      style?: React.CSSProperties;
-      unstyled?: boolean;
-    }
-) & {
+export type BackdropOptions = Either<
+  { render?: () => React.ReactNode },
+  {
+    className?: string;
+    style?: React.CSSProperties;
+    unstyled?: boolean;
+  }
+> & {
   closeAllOnClick?: boolean;
 };

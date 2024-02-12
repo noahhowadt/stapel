@@ -44,6 +44,7 @@ function mergeOptions(
       ...stackerProps.modalOptions,
       ...currentModalProps.modalOptions,
     },
+    // @ts-ignore - Render method doesn't need to be defined
     backdropOptions: {
       ...DEFAULT_OPTIONS.backdropOptions,
       ...stackerProps.backdropOptions,

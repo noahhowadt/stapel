@@ -11,6 +11,13 @@ interface ModalWrapperProps {
   modalOptions: ModalOptions;
 }
 
+const cn = (options: ModalOptions) =>
+  [
+    "stapel-modal-base",
+    options.unstyled ? "" : "stapel-modal",
+    options.className,
+  ].join(" ");
+
 function ModalWrapper(props: ModalWrapperProps) {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -45,9 +52,7 @@ function ModalWrapper(props: ModalWrapperProps) {
         },
         ...props.modalOptions.style,
       }}
-      className={`stapel-modal-base ${
-        props.modalOptions?.unstyled ? "" : "stapel-modal"
-      } ${props.modalOptions.className || ""}`}
+      className={cn(props.modalOptions)}
     >
       {"render" in props.modalOptions ? (
         props.modalOptions.render(props.modal, isMounted)

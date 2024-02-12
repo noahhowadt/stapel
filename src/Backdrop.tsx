@@ -6,6 +6,13 @@ interface Props {
   options: BackdropOptions;
 }
 
+const cn = (options: BackdropOptions) =>
+  [
+    "stapel-backdrop-base",
+    options.unstyled ? "" : "stapel-backdrop",
+    options.className,
+  ].join(" ");
+
 function Backdrop({ options }: Props) {
   if ("render" in options) {
     if (options.render === null) return null;
@@ -20,7 +27,8 @@ function Backdrop({ options }: Props) {
 
   return (
     <div
-      className="stapel-stacker-bg"
+      className={cn(options)}
+      style={options.style}
       onClick={options.closeAllOnClick ? modal.closeAll : undefined}
     />
   );
