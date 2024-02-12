@@ -15,15 +15,15 @@ function ModalWrapper(props: ModalWrapperProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (props.isCurrent) {
-      if (
-        "render" in props.modalOptions ||
-        props.modalOptions.animation === null
-      ) {
-        setIsMounted(true);
-      } else {
-        setTimeout(() => setIsMounted(true), 0);
-      }
+    if (!props.isCurrent) return;
+
+    if (
+      "render" in props.modalOptions ||
+      props.modalOptions.animation === null
+    ) {
+      setIsMounted(true);
+    } else {
+      setTimeout(() => setIsMounted(true), 0);
     }
 
     return () => setIsMounted(false);
@@ -32,28 +32,27 @@ function ModalWrapper(props: ModalWrapperProps) {
   return (
     <div
       style={{
-        display: props.isCurrent ? "block" : "none",
-        position: "relative",
+        ...{
+          display: props.isCurrent ? "block" : "none",
+          opacity: isMounted ? 1 : props.modalOptions.animation?.opacity ?? 1,
+          transform:
+            isMounted || props.modalOptions.animation === null
+              ? ""
+              : `scale(${props.modalOptions.animation?.scale ?? 1}) translate(${
+                  props.modalOptions.animation?.translateX ?? 0
+                }, ${props.modalOptions.animation?.translateY ?? 0})`,
+          transitionDuration: props.modalOptions.animation?.duration,
+        },
+        ...props.modalOptions.style,
       }}
+      className={`stapel-modal-base ${
+        props.modalOptions?.unstyled ? "" : "stapel-modal"
+      } ${props.modalOptions.className || ""}`}
     >
       {"render" in props.modalOptions ? (
         props.modalOptions.render(props.modal, isMounted)
       ) : (
-        <div
-          className="stapel-modal"
-          style={{
-            opacity: isMounted ? 1 : props.modalOptions.animation?.opacity ?? 1,
-            transform:
-              isMounted || props.modalOptions.animation === null
-                ? ""
-                : `scale(${
-                    props.modalOptions.animation?.scale ?? 1
-                  }) translate(${
-                    props.modalOptions.animation?.translateX ?? 0
-                  }, ${props.modalOptions.animation?.translateY ?? 0})`,
-            transitionDuration: props.modalOptions.animation?.duration,
-          }}
-        >
+        <div>
           {props.modalOptions.hideCloseButton !== true ? (
             <button
               onClick={() => modalHandler.close(props.modal.id)}

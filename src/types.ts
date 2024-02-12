@@ -30,6 +30,7 @@ export type ModalOptions = Either<
     className?: string;
     style?: React.CSSProperties;
     hideCloseButton?: boolean;
+    unstyled?: boolean;
   }
 > & {
   animation?: null | {
@@ -47,6 +48,7 @@ export type BackdropOptions = (
   | {
       className?: string;
       style?: React.CSSProperties;
+      unstyled?: boolean;
     }
 ) & {
   closeAllOnClick?: boolean;
